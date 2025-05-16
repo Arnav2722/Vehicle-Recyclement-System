@@ -1,6 +1,6 @@
-# Junk Car Detector
+# Vehicle Recyclement System
 
-Junk Car Detector is a Python program for dealing with junkyard cars.
+Vehicle Recyclement System is a Python program for dealing with junkyard cars.
 
 ## Installation
 
