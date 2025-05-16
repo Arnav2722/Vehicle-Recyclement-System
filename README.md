@@ -7,7 +7,7 @@ Vehicle Recyclement System is a Python program for dealing with junkyard cars.
 Use the [git]() clone to get custom trained model.
 
 ```bash
-git clone https://github.com/Khushiyant/Junkyard_Cars_Detector.git
+git clone https://github.com/Arnav2722/Vehicle-Recyclement-System.git
 ```
 
 ## Usage
