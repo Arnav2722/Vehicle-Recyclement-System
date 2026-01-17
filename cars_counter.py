@@ -30,6 +30,7 @@ class EuclideanDistTracker:
                 if distance < 20:  # Threshold for considering the same object
                     same_object_detected = True
                     new_center_points[object_id] = (cx, cy)
+                    new_center_points[object_id] = (cx, cy)
                     # Keep the original class or update if we have a new one
                     if class_id is not None:
                         new_object_classes[object_id] = class_id

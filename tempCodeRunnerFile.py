@@ -1,10 +1,11 @@
 import cv2 as cv
 import numpy as np
 
+
 class EuclideanDistTracker:
     def __init__(self):
-        self.center_points = {}  # Store the center positions of detected objects
-        self.id_count = 0  # Keep track of object IDs
+        self.center_points = {}
+        self.id_count = 0
 
     def update(self, detections):
         objects_bbs_ids = []
@@ -58,7 +59,15 @@ def findObjects(outputs, img, confThreshold, nmsThreshold, tracker):
 
     boxes_ids = tracker.update(detections)
     for x, y, w, h, obj_id in boxes_ids:
-        cv.putText(img, f'ID {obj_id}', (x, y - 10), cv.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 2)
+        cv.putText(
+            img,
+            f"ID {obj_id}",
+            (x, y - 10),
+            cv.FONT_HERSHEY_SIMPLEX,
+            0.5,
+            (0, 255, 0),
+            2,
+        )
         cv.rectangle(img, (x, y), (x + w, y + h), (255, 0, 0), 2)
 
     return len(boxes_ids)  # Return count of objects detected
@@ -72,11 +81,14 @@ def main(video_path="Resources/Drone.mp4"):
 
     # Load class names
     classesFile = "Resources/coco.names"
-    with open(classesFile, 'rt') as f:
-        classNames = f.read().rstrip().split('\n')
+    with open(classesFile, "rt") as f:
+        classNames = f.read().rstrip().split("\n")
 
     # Load YOLO model
-    net = cv.dnn.readNetFromDarknet("Resources/custom-yolov4-tiny-detector.cfg", "Resources/custom-yolov4-tiny-detector_best.weights")
+    net = cv.dnn.readNetFromDarknet(
+        "Resources/custom-yolov4-tiny-detector.cfg",
+        "Resources/custom-yolov4-tiny-detector_best.weights",
+    )
     net.setPreferableBackend(cv.dnn.DNN_BACKEND_OPENCV)
     net.setPreferableTarget(cv.dnn.DNN_TARGET_CPU)
 
@@ -87,14 +99,28 @@ def main(video_path="Resources/Drone.mp4"):
             break
 
         frame = cv.resize(frame, (0, 0), fx=0.6, fy=0.6)
-        blob = cv.dnn.blobFromImage(frame, 1 / 255, (whT, whT), [0, 0, 0], 1, crop=False)
+        blob = cv.dnn.blobFromImage(
+            frame, 1 / 255, (whT, whT), [0, 0, 0], 1, crop=False
+        )
         net.setInput(blob)
-        outputNames = [net.getLayerNames()[i - 1] for i in net.getUnconnectedOutLayers()]
+        outputNames = [
+            net.getLayerNames()[i - 1] for i in net.getUnconnectedOutLayers()
+        ]
         outputs = net.forward(outputNames)
 
-        total_objects = findObjects(outputs, frame, confThreshold, nmsThreshold, tracker)
-        cv.putText(frame, f'Count: {total_objects}', (20, 50), cv.FONT_HERSHEY_SIMPLEX, 1, (0, 0, 255), 2)
-        cv.imshow('Vehicle Counter', frame)
+        total_objects = findObjects(
+            outputs, frame, confThreshold, nmsThreshold, tracker
+        )
+        cv.putText(
+            frame,
+            f"Count: {total_objects}",
+            (20, 50),
+            cv.FONT_HERSHEY_SIMPLEX,
+            1,
+            (0, 0, 255),
+            2,
+        )
+        cv.imshow("Vehicle Counter", frame)
 
         if cv.waitKey(1) & 0xFF == 27:
             break

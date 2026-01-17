@@ -7,8 +7,8 @@ class EuclideanDistTracker:
 
         Attributes:
             center_points (dict): Stores the center positions of detected objects.
-                                  Key: Object ID
-                                  Value: (x, y) coordinates of the object's center
+                                Key: Object ID
+                                Value: (x, y) coordinates of the object's center
             id_count (int): Counter for assigning unique IDs to new objects.
         """
         self.center_points = {}
